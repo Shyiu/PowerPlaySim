@@ -1,55 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//TODO: Add a method where everytime a cone is place, a box collider is created that is as high as the base of the cone. 
 public class Detection : MonoBehaviour
 {
-    [SerializeField] GameObject obj;
+    GameObject obj;
     MeshRenderer meshRendererObj;
     Vector3 hostPos;
-    Vector3 targetPos;
+    Vector3 direction;
     Ray ray;
+    GameObject priorObj;
     RaycastHit hit;
-    public float distance = 10f;
+    // private int coneId;
+    [SerializeField] GameObject Robot;
+    [SerializeField] GameObject blueCone;
+    public float distance = 2.5f;
     // Start is called before the first frame update
     void Start()
     {
-        hostPos = GameObject.Find("Robot1").transform.position;
+
+        obj = Robot;
         meshRendererObj = obj.GetComponent<MeshRenderer>();
-        targetPos = obj.transform.position;
+        priorObj = Robot;
+        
     }
 
 
     // Update is called once per frame
-    void Update()
-    {
-        ray = new Ray(hostPos, (targetPos - hostPos).normalized * 10);
-        Debug.Log(hostPos);
-        if(Physics.Raycast(ray, out hit))
+    bool Scan(){
+        hostPos = Robot.transform.position;
+        direction = Robot.transform.forward;
+        ray = new Ray(hostPos, direction);
+        
+        if (Physics.Raycast(ray, out hit, distance) )
         {
-            Debug.Log(hit.collider.name);
-        }
-
-        if (Physics.Raycast(ray, out hit, distance) && hit.collider.gameObject == obj)
-        {
-            Debug.Log("contact");
-            
+            if(!obj.name.Equals(priorObj.name)){
+                meshRendererObj = priorObj.GetComponent<MeshRenderer>();
+                for (int i = 0; i < meshRendererObj.materials.Length; i++)
+                {
+                    meshRendererObj.materials[i].DisableKeyword("_EMISSION");
+                }
+            }
+            obj = hit.collider.gameObject;
+            priorObj = obj;
+            meshRendererObj = obj.GetComponent<MeshRenderer>();
             for (int i = 0; i < meshRendererObj.materials.Length;i++)
             {
                 meshRendererObj.materials[i].EnableKeyword("_EMISSION");
             }
-           
-
-        }
+            return true;
+         }
         else
         {
-
-            for (int i = 0; i < meshRendererObj.materials.Length; i++)
-            {
-                meshRendererObj.materials[i].DisableKeyword("_EMISSION");
-            }
+                for (int i = 0; i < meshRendererObj.materials.Length; i++)
+                {
+                    meshRendererObj.materials[i].DisableKeyword("_EMISSION");
+                }
+                return false;
         }
-
+        
+    }
+    void Update()
+    {
+       if(Scan()){
+            if(Input.GetKeyDown(KeyCode.Alpha1)){         
+                 GameObject newBlueCone = Instantiate(blueCone, new Vector3(obj.gameObject.transform.position.x,obj.gameObject.transform.position.y + 10,obj.gameObject.transform.position.z), Quaternion.identity);
+                 newBlueCone.gameObject.transform.localScale += new Vector3(10,10,10);
+                 Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
+                 blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
+            }
+       }  
     }
 
 }
