@@ -10,11 +10,14 @@ public class Detection : MonoBehaviour
     Vector3 direction;
     Ray ray;
     GameObject priorObj;
+    GameObject priorCone;
     RaycastHit hit;
     // private int coneId;
     [SerializeField] GameObject Robot;
     [SerializeField] GameObject blueCone;
     public float distance = 2.5f;
+    public float coneDistance = .5f;
+    private bool conePickedUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +25,7 @@ public class Detection : MonoBehaviour
         obj = Robot;
         meshRendererObj = obj.GetComponent<MeshRenderer>();
         priorObj = Robot;
+        conePickedUp = false;
         
     }
 
@@ -34,6 +38,12 @@ public class Detection : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, distance) )
         {
+            if(hit.collider.gameObject.name.Contains("Wall") || hit.collider.gameObject.name.Contains("Cone")){
+                return false;
+            }
+            if(obj == null){
+                return false;
+            }
             if(!obj.name.Equals(priorObj.name)){
                 meshRendererObj = priorObj.GetComponent<MeshRenderer>();
                 for (int i = 0; i < meshRendererObj.materials.Length; i++)
@@ -51,7 +61,10 @@ public class Detection : MonoBehaviour
             return true;
          }
         else
-        {
+        { 
+                if(obj == null){
+                    return false;
+                }
                 for (int i = 0; i < meshRendererObj.materials.Length; i++)
                 {
                     meshRendererObj.materials[i].DisableKeyword("_EMISSION");
@@ -60,16 +73,65 @@ public class Detection : MonoBehaviour
         }
         
     }
+    void coneHit(){
+        hostPos = Robot.transform.position;
+        direction = Robot.transform.forward;
+        ray = new Ray(hostPos, direction);
+        if (Physics.Raycast(ray, out hit, coneDistance) )
+        {
+            obj = hit.collider.gameObject;
+            if(obj != null){
+            priorCone = obj;
+            meshRendererObj = obj.GetComponent<MeshRenderer>();
+            if( hit.collider.gameObject.name.Contains("Cone")){     
+                for (int i = 0; i < meshRendererObj.materials.Length;i++)
+                {
+                meshRendererObj.materials[i].EnableKeyword("_EMISSION");
+            }   
+                if(Input.GetKeyDown(KeyCode.Alpha2) && !conePickedUp){         
+                    conePickedUp = true;
+                    Destroy(hit.collider.gameObject);
+                    return;
+                }
+                
+            }
+            }
+            else{
+                return;
+            }
+        }
+        
+         else{
+            obj = priorCone;
+            if(obj != null){
+                meshRendererObj = obj.GetComponent<MeshRenderer>();
+                if( hit.collider.gameObject.name.Contains("Cone")){     
+                    for (int i = 0; i < meshRendererObj.materials.Length;i++)
+                    {
+                    meshRendererObj.materials[i].EnableKeyword("_EMISSION");
+                }   
+            }else{
+                return;
+            }
+         }
+         }
+        
+
+    }
     void Update()
     {
        if(Scan()){
-            if(Input.GetKeyDown(KeyCode.Alpha1)){         
+            if(Input.GetKeyDown(KeyCode.Alpha1) && conePickedUp){  
+                 conePickedUp = false;       
                  GameObject newBlueCone = Instantiate(blueCone, new Vector3(obj.gameObject.transform.position.x,obj.gameObject.transform.position.y + 10,obj.gameObject.transform.position.z), Quaternion.identity);
                  newBlueCone.gameObject.transform.localScale += new Vector3(10,10,10);
                  Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
                  blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
             }
        }  
+       coneHit();
+        
+       
     }
 
 }
