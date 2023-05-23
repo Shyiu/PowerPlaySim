@@ -26,7 +26,6 @@ public class BarrierGeneration : MonoBehaviour
              Rigidbody blueConeRb =  blueConeClone.GetComponent<Rigidbody>();
              blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
-             blueConeCollider
         }
         for(int r = 0; r < 5; r++){
             GameObject blueConeClone = Instantiate(blueCone, new Vector3(-11.5f, r * .25f, -2 * 0.4375f), Quaternion.identity);
