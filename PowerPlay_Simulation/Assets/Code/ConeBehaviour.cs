@@ -27,19 +27,22 @@ public class ConeBehaviour : MonoBehaviour
         
     }
     private void OnTriggerEnter(Collider c){
-        float x = gameObject.transform.position.x;
-        float z = gameObject.transform.position.z;
-        Debug.Log("x: " + x);
-        Debug.Log("z: " + z);
-        x += 2 * offset;
-        z += 2 * offset;
-        x /= offset;
-        z /= offset;
-        yvalues[(int) z, (int) x] += .25f;
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; 
-        Collider col = GetComponent<Collider>();
-        col.enabled = false;
-        GameObject barrier = Instantiate(c.gameObject, new Vector3(gameObject.transform.position.x, yvalues[((int) z),((int) x)], gameObject.transform.position.z), Quaternion.identity);
+        if (c.attachedRigidbody.velocity.y < 0)
+        {
+            float x = gameObject.transform.position.x;
+            float z = gameObject.transform.position.z;
+            Debug.Log("x: " + x);
+            Debug.Log("z: " + z);
+            x += 2 * offset;
+            z += 2 * offset;
+            x /= offset;
+            z /= offset;
+            yvalues[(int)z, (int)x] += .25f;
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            Collider col = GetComponent<Collider>();
+            col.enabled = false;
+            GameObject barrier = Instantiate(c.gameObject, new Vector3(gameObject.transform.position.x, yvalues[((int)z), ((int)x)], gameObject.transform.position.z), Quaternion.identity);
+        }
     }
 }

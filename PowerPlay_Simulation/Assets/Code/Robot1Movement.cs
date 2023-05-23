@@ -23,11 +23,13 @@ public class Robot1Movement : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             stopped = true;
         }
+     
         if(stopped){
-        float h = Input.GetAxisRaw("Horizontal");   
-        float v = Input.GetAxisRaw("Vertical");
-        rb.AddRelativeForce(Vector3.forward * v * speed, ForceMode.Impulse);
-        rb.AddTorque(Vector3.up * h * turnspeed, ForceMode.Impulse);
+            float h = Input.GetAxisRaw("Horizontal");   
+            float v = Input.GetAxisRaw("Vertical");
+    
+            rb.AddRelativeForce(Vector3.forward * v * speed, ForceMode.Impulse);
+            rb.AddTorque(Vector3.up * h * turnspeed, ForceMode.Impulse);
         }
     }
 }

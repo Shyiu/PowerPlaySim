@@ -22,17 +22,16 @@ public class BarrierGeneration : MonoBehaviour
         GameObject blueCone = GameObject.Find("Blue_Cone").gameObject;
         for(int r = 0; r < 5; r++){
             GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.5f, r * .25f, -2 * 0.4375f), Quaternion.identity);
-             blueConeClone.gameObject.transform.localScale += new Vector3(10,10,10);
+             blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
              Rigidbody blueConeRb =  blueConeClone.GetComponent<Rigidbody>();
              blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
         }
         for(int r = 0; r < 5; r++){
             GameObject blueConeClone = Instantiate(blueCone, new Vector3(-11.5f, r * .25f, -2 * 0.4375f), Quaternion.identity);
-             blueConeClone.gameObject.transform.localScale += new Vector3(10,10,10);
+             blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
              Rigidbody blueConeRb =  blueConeClone.GetComponent<Rigidbody>();
              blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
-            
         }
 
     }

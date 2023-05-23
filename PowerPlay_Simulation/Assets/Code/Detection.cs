@@ -124,8 +124,9 @@ public class Detection : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Alpha1) && conePickedUp){  
                  conePickedUp = false;       
                  GameObject newBlueCone = Instantiate(blueCone, new Vector3(obj.gameObject.transform.position.x,obj.gameObject.transform.position.y + 10,obj.gameObject.transform.position.z), Quaternion.identity);
-                 newBlueCone.gameObject.transform.localScale += new Vector3(10,10,10);
+                 newBlueCone.gameObject.transform.localScale += new Vector3(9,9,9);
                  Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
+                 blueConeRb.mass = 625;
                  blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
             }
        }  
