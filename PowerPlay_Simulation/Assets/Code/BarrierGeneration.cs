@@ -46,6 +46,29 @@ public class BarrierGeneration : MonoBehaviour
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
 
         }
+        GameObject redCone = GameObject.Find("Red_Cone").gameObject;
+        for (int r = 0; r < 5; r++)
+        {
+            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.25f, (5 - r) * .25f, 2 * 0.4375f), Quaternion.identity);
+            // Debug.Log(blueConeClone.transform.position.y);
+            blueConeClone.gameObject.transform.localScale += new Vector3(9, 9, 9);
+            blueConeClone.name = "Right Red_Cone Stack " + r;
+            Rigidbody blueConeRb = blueConeClone.GetComponent<Rigidbody>();
+            blueConeRb.useGravity = false;
+            blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
+        }
+        for (int r = 0; r < 5; r++)
+        {
+            GameObject blueConeClone = Instantiate(redCone, new Vector3(-11.25f, r * .25f, 2 * 0.4375f), Quaternion.identity);
+            blueConeClone.gameObject.transform.localScale += new Vector3(9, 9, 9);
+            blueConeClone.name = "Left Red_Cone Stack " + r;
+            Rigidbody blueConeRb = blueConeClone.GetComponent<Rigidbody>();
+            blueConeRb.useGravity = false;
+            blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
+
+        }
 
     }
    

@@ -8,16 +8,18 @@ public class ConeStackBehaviour : MonoBehaviour
     private Ray ray;
     private List<Collider> cones = new List<Collider>();
     private int conesLeft = 5;
-    private bool complete = false;
     public float coneDistance = 1.5f;
     [SerializeField] GameObject robot;
+    [SerializeField] GameObject robot2;
     private bool lightOn = false;
     private bool sort = false;
+    private bool blue = false;
     private Detection robotScript;
+    private Detection robotScript2;
     void Start()
     {
-        robotScript = robot.GetComponent<Detection>();        
-
+        robotScript = robot.GetComponent<Detection>();
+        robotScript2 = robot2.GetComponent<Detection>();
     }
   
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class ConeStackBehaviour : MonoBehaviour
     void OnTriggerEnter(Collider c){
         Debug.Log("Trigger has been entered");
         if(c.gameObject.name.Contains("Blue_Cone")){
-            complete = false;
+            blue = true;
             // for(int x = 0; x < cones.Count; x++){
             //     if(cones[x].gameObject.transform.position.y >= c.gameObject.transform.position.y){
             //         cones.Insert(x, c);
@@ -38,6 +40,17 @@ public class ConeStackBehaviour : MonoBehaviour
             // }
             
             
+        }
+        else if (c.gameObject.name.Contains("Red_Cone"))
+        {
+            blue = false;
+            // for(int x = 0; x < cones.Count; x++){
+            //     if(cones[x].gameObject.transform.position.y >= c.gameObject.transform.position.y){
+            //         cones.Insert(x, c);
+            //         complete = true;
+            //     }
+            // }
+            cones.Insert(0, c);
         }
     }
     private void lightUpCone(){
@@ -81,26 +94,53 @@ public class ConeStackBehaviour : MonoBehaviour
     }
     void Update()
     {
-        if(!sort){
+        if (!sort) {
             cones.Sort(CompareYValues);
             sort = true;
         }
-        Debug.Log(conesLeft);
-        if(conesLeft != 0){
-         ray = new Ray(robot.transform.position, robot.transform.forward);
-         if (Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name)){
+        if (conesLeft != 0)
+        {
+            if (blue)
+            {
+                Debug.Log("this is blue");
+                ray = new Ray(robot.transform.position, robot.transform.forward);
+                if (Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name) && blue)
+                {
+                    lightUpCone();
+                    lightOn = true;
+                }
+                else if (lightOn)
+                {
+                    darkenCone();
+                    lightOn = false;
+                }
+                
+            }
+            else {
+                Debug.Log("This is red");
+                ray = new Ray(robot2.transform.position, robot2.transform.forward);
+                if (Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name) && !blue)
+            {
                 lightUpCone();
                 lightOn = true;
-         } 
-         else if(lightOn){
-            darkenCone();
-            lightOn = false;
-         }
-         if(lightOn && Input.GetKeyDown(KeyCode.Alpha2) && robotScript.canPickupCone()){
+            }
+            else if (lightOn)
+            {
+                darkenCone();
+                lightOn = false;
+            }
+        }
+         if(lightOn && Input.GetKeyDown(KeyCode.Alpha2) && robotScript.canPickupCone() && blue){
             robotScript.pickUpCone();
             destroyTopCone();
             
          }
+         if (lightOn && Input.GetKeyDown(KeyCode.Alpha4) && robotScript2.canPickupCone() && !blue)
+            {
+                robotScript2.pickUpCone();
+                destroyTopCone();
+
+            }
         }
 
     }  
