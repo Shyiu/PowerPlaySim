@@ -5,6 +5,9 @@ using UnityEngine;
 public class BarrierGeneration : MonoBehaviour
 {
     public float offset = 4f;
+    [SerializeField] Material transparentRed;
+    [SerializeField] Material transparentBlue;
+    
     private Dictionary<int,string> letter = new Dictionary<int,string>();
     // Start is called before the first frame update
     void Start()
@@ -46,7 +49,42 @@ public class BarrierGeneration : MonoBehaviour
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
 
         }
+        int coneCount = 11;
+        for(int c = 1; c <= 4; c++){
+            if(c == 0){
+                continue;
+            }
+            for(int r = 4; r >= 0; r--){
+                GameObject blueConeClone = Instantiate(blueCone, new Vector3(1f * c - 2 * 1f, r * .25f, -12.5f), Quaternion.identity);
+                blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
+                blueConeClone.name = "Blue Cone " + coneCount;
+                Rigidbody blueConeRb =  blueConeClone.GetComponent<Rigidbody>();
+                blueConeRb.useGravity = false;
+                blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
+                MeshRenderer blueConeCollider = blueConeClone.GetComponent<MeshRenderer>();
+                blueConeCollider.material = transparentBlue;
+                coneCount += 1;
+            }
+        }
         GameObject redCone = GameObject.Find("Red_Cone").gameObject;
+
+        coneCount = 11;
+        for(int c = 1; c <= 4; c++){
+            if(c == 0){
+                continue;
+            }
+            for(int r = 4; r >= 0; r--){
+                GameObject blueConeClone = Instantiate(redCone, new Vector3(1f * c - 2 * 1f, r * .25f, 12.5f), Quaternion.identity);
+                blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
+                blueConeClone.name = "Red Cone " + coneCount;
+                Rigidbody blueConeRb =  blueConeClone.GetComponent<Rigidbody>();
+                blueConeRb.useGravity = false;
+                blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
+                MeshRenderer blueConeCollider = blueConeClone.GetComponent<MeshRenderer>();
+                blueConeCollider.material = transparentRed;
+                coneCount += 1;
+            }
+        }
         for (int r = 0; r < 5; r++)
         {
             GameObject blueConeClone = Instantiate(redCone, new Vector3(11.25f, (5 - r) * .25f, 2 * 0.4375f), Quaternion.identity);

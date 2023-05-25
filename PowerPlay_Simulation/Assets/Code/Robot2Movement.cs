@@ -13,6 +13,7 @@ public class Robot2Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.AddRelativeForce(Vector3.forward * -1 * speed, ForceMode.Impulse);
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class Robot2Movement : MonoBehaviour
         if (rb.velocity.y == 0)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            
             stopped = true;
         }
      

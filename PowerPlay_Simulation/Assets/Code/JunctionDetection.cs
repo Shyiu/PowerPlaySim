@@ -54,7 +54,7 @@ public class JunctionDetection : MonoBehaviour
             {
                 meshRendererObj.materials[i].EnableKeyword("_EMISSION");
             }
-            emissionToggle = true;
+            emissionToggle2 = true;
         }
         else
         {
@@ -63,11 +63,12 @@ public class JunctionDetection : MonoBehaviour
                     meshRendererObj.materials[i].DisableKeyword("_EMISSION");
                 }
                 emissionToggle = false;
+                emissionToggle2 = false;
         }
         
       
         if (emissionToggle){
-            if(Input.GetKeyDown(KeyCode.Alpha1) && !d.canPickupCone() && conesPlaced < coneLimit){
+            if((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E)) && !d.canPickupCone() && conesPlaced < coneLimit){
                 d.scoreCone();
                 conesPlaced += 1;
                 GameObject newBlueCone = Instantiate(blueCone, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y + heightConstant, gameObject.transform.position.z), Quaternion.identity);
@@ -80,7 +81,7 @@ public class JunctionDetection : MonoBehaviour
         }
         if (emissionToggle2)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha3) && !d2.canPickupCone() && conesPlaced < coneLimit)
+            if ((Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.O)) && !d2.canPickupCone() && conesPlaced < coneLimit)
             {
                 d2.scoreCone();
                 conesPlaced += 1;

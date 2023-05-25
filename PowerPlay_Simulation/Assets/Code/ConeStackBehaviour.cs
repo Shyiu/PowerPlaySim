@@ -25,7 +25,6 @@ public class ConeStackBehaviour : MonoBehaviour
     // Update is called once per frame
      
     void OnTriggerEnter(Collider c){
-        Debug.Log("Trigger has been entered");
         if(c.gameObject.name.Contains("Blue_Cone")){
             blue = true;
             // for(int x = 0; x < cones.Count; x++){
@@ -54,6 +53,9 @@ public class ConeStackBehaviour : MonoBehaviour
         }
     }
     private void lightUpCone(){
+        if(cones[conesLeft - 1] == null){
+            return;
+        }
         MeshRenderer meshRendererObj = cones[conesLeft - 1].gameObject.GetComponent<MeshRenderer>();
                 for (int i = 0; i < meshRendererObj.materials.Length;i++)
                 {
@@ -102,7 +104,6 @@ public class ConeStackBehaviour : MonoBehaviour
         {
             if (blue)
             {
-                Debug.Log("this is blue");
                 ray = new Ray(robot.transform.position, robot.transform.forward);
                 if (Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name) && blue)
                 {
@@ -117,7 +118,6 @@ public class ConeStackBehaviour : MonoBehaviour
                 
             }
             else {
-                Debug.Log("This is red");
                 ray = new Ray(robot2.transform.position, robot2.transform.forward);
                 if (Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name) && !blue)
             {
@@ -130,12 +130,13 @@ public class ConeStackBehaviour : MonoBehaviour
                 lightOn = false;
             }
         }
-         if(lightOn && Input.GetKeyDown(KeyCode.Alpha2) && robotScript.canPickupCone() && blue){
-            robotScript.pickUpCone();
-            destroyTopCone();
-            
-         }
-         if (lightOn && Input.GetKeyDown(KeyCode.Alpha4) && robotScript2.canPickupCone() && !blue)
+         if(lightOn && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E)) && robotScript.canPickupCone() && blue)
+            {
+                robotScript.pickUpCone();
+                destroyTopCone();
+                
+            }
+         if (lightOn && (Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.O)) && robotScript2.canPickupCone() && !blue)
             {
                 robotScript2.pickUpCone();
                 destroyTopCone();

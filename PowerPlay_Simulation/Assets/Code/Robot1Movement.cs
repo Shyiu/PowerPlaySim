@@ -12,7 +12,9 @@ public class Robot1Movement : MonoBehaviour
    
     void Start()
     {
+
         rb = GetComponent<Rigidbody>();
+        rb.AddRelativeForce(Vector3.forward * -1 * speed, ForceMode.Impulse);
     }
 
     // Update is called once per frame
