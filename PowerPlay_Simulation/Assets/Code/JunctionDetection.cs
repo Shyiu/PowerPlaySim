@@ -13,24 +13,44 @@ public class JunctionDetection : MonoBehaviour
     RaycastHit hit;
     bool emissionToggle = false;
     bool emissionToggle2 = false;
-    public float distance = 2.5f;
+    private float distance = 2.5f;
     Detection d;
     Detection d2;
-    public float heightConstant = 3.5f;
+    ScoreBoard s;
+    private float heightConstant = 3.5f;
     public float coneLimit = 8;
+    private string junctionType = "";
     private int conesPlaced = 0;
+    private Dictionary<string,float> heights = new Dictionary<string,float>();
+    private Dictionary<string, int> conversion = new Dictionary<string, int>();
+
     // Start is called before the first frame update
     void Start()
     {
+        heights.Add("Short", 5f);
+        heights.Add("Ground", 2f);
+        heights.Add("Medium", 7);
+        heights.Add("High", 10);
         robot = GameObject.Find("Robot1");
         blueCone = GameObject.Find("Blue_Cone");
         robot2 = GameObject.Find("Robot2");
         redCone = GameObject.Find("Red_Cone");
+        conversion.Add("Ground", 0);
+        conversion.Add("Short", 1);
+        conversion.Add("Medium", 2);
+        conversion.Add("High", 3);
         meshRendererObj = GetComponent<MeshRenderer>();
         d = robot.GetComponent<Detection>();
+        s = GameObject.Find("Canvas").GetComponent<ScoreBoard>();
         d2 = robot2.GetComponent<Detection>();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
-
+        foreach(KeyValuePair<string, float> kvp in heights)
+            {
+                if(gameObject.name.Contains(kvp.Key)){
+                    heightConstant = kvp.Value;
+                    junctionType = kvp.Key;
+                }
+            }
     }
 
     // Update is called once per frame
@@ -76,7 +96,7 @@ public class JunctionDetection : MonoBehaviour
                 Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
                 blueConeRb.mass = 625;
                 blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
-            
+                s.placeBlueCone(conversion[junctionType]);
             }
         }
         if (emissionToggle2)

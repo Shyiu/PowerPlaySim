@@ -98,14 +98,14 @@ public class ConeBehaviour : MonoBehaviour
     
     private void OnTriggerEnter(Collider c){
         
-        if (GetComponent<Rigidbody>().velocity.y < 0)
+        if (c.gameObject.name.Contains("barrier"))
         {
             Rigidbody rb = GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            
             Collider col = GetComponent<Collider>();
             col.enabled = false;
             c.gameObject.transform.position = new Vector3(c.gameObject.transform.position.x, c.gameObject.transform.position.y + .375f, c.gameObject.transform.position.z);
-            // Debug.Log("disabled cone colldier");
         }
     }
 }

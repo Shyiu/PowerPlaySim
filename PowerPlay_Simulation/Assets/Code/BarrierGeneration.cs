@@ -23,14 +23,14 @@ public class BarrierGeneration : MonoBehaviour
             for(int c = 0; c < 5; c++){
                 float x = (offset * c) - (2 * offset);
                 float z = (offset * r) - (2 * offset);
-                GameObject barrier = Instantiate(d.gameObject, new Vector3(x, 0, z), Quaternion.identity);
+                GameObject barrier = Instantiate(d.gameObject, new Vector3(x, 0.25f, z), Quaternion.identity);
                 barrier.name = letter[r] + "" + (c+1) + "barrier";
 
             }
         }
         GameObject blueCone = GameObject.Find("Blue_Cone").gameObject;
         for(int r = 0; r < 5; r++){
-            GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.25f, (5 - r) * .25f, -2 * 0.4375f), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, (5 - r) * .25f, -2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
              blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
              blueConeClone.name = "Right Blue_Cone Stack " + r;
@@ -40,7 +40,7 @@ public class BarrierGeneration : MonoBehaviour
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
         }
         for(int r = 0; r < 5; r++){
-            GameObject blueConeClone = Instantiate(blueCone, new Vector3(-11.25f, r * .25f, -2 * 0.4375f), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(blueCone, new Vector3(-11.4f, r * .25f, -2), Quaternion.identity);
             blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
              blueConeClone.name = "Left Blue_Cone Stack " + r;
              Rigidbody blueConeRb =  blueConeClone.GetComponent<Rigidbody>();
@@ -87,7 +87,7 @@ public class BarrierGeneration : MonoBehaviour
         }
         for (int r = 0; r < 5; r++)
         {
-            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.25f, (5 - r) * .25f, 2 * 0.4375f), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.4f, (5 - r) * .25f, 2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
             blueConeClone.gameObject.transform.localScale += new Vector3(9, 9, 9);
             blueConeClone.name = "Right Red_Cone Stack " + r;
@@ -98,7 +98,7 @@ public class BarrierGeneration : MonoBehaviour
         }
         for (int r = 0; r < 5; r++)
         {
-            GameObject blueConeClone = Instantiate(redCone, new Vector3(-11.25f, r * .25f, 2 * 0.4375f), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(redCone, new Vector3(-11.4f, r * .25f, 2), Quaternion.identity);
             blueConeClone.gameObject.transform.localScale += new Vector3(9, 9, 9);
             blueConeClone.name = "Left Red_Cone Stack " + r;
             Rigidbody blueConeRb = blueConeClone.GetComponent<Rigidbody>();
