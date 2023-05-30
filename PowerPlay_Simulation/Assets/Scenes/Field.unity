@@ -809,6 +809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb168aadffff3d43af24bd5fc48b075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 1
 --- !u!1 &145351003
 GameObject:
   m_ObjectHideFlags: 0
@@ -4003,6 +4004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb168aadffff3d43af24bd5fc48b075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 1
 --- !u!54 &1109593364
 Rigidbody:
   m_ObjectHideFlags: 0

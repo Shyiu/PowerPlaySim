@@ -5,6 +5,7 @@ using UnityEngine;
 public class Detection : MonoBehaviour
 {
     private bool conePickedUp;
+    public bool debugMode = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,9 @@ public class Detection : MonoBehaviour
     }
     void Update()
 {
-  
+    if(debugMode && canPickupCone()){
+        pickUpCone();
+    }
        
     }
 
