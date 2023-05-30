@@ -22,8 +22,10 @@ public class JunctionDetection : MonoBehaviour
     private float col = 0;
     private float heightConstant = 3.5f;
     public float coneLimit = 8;
+    private bool mouseDetection = false;
     private string junctionType = "";
     private int conesPlaced = 0;
+    private bool clickTrigger = false;
     private Dictionary<string,float> heights = new Dictionary<string,float>();
     private Dictionary<string, int> conversion = new Dictionary<string, int>();
     
@@ -59,7 +61,12 @@ public class JunctionDetection : MonoBehaviour
                 }
             }
     }
-
+    public void enableMouse(){
+        mouseDetection = true;
+    }
+    public void disableMouse(){
+        mouseDetection = false;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -69,6 +76,7 @@ public class JunctionDetection : MonoBehaviour
         }
         ray = new Ray(robot.transform.position, robot.transform.forward);
         Ray ray2 = new Ray(robot2.transform.position, robot2.transform.forward);
+        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, distance) && hit.collider.name.Equals(gameObject.name) && conesPlaced < coneLimit && !d.canPickupCone()){
             for (int i = 0; i < meshRendererObj.materials.Length; i++)
                 {
@@ -83,6 +91,13 @@ public class JunctionDetection : MonoBehaviour
             }
             emissionToggle2 = true;
         }
+        else if(mouseDetection && Physics.Raycast(mouseRay, out hit) && hit.collider.name.Equals(gameObject.name) && conesPlaced < coneLimit){
+            for (int i = 0; i < meshRendererObj.materials.Length; i++)
+            {
+                meshRendererObj.materials[i].EnableKeyword("_EMISSION");
+            }
+            clickTrigger = true;
+        }
         else
         {
             for (int i = 0; i < meshRendererObj.materials.Length; i++)
@@ -91,9 +106,10 @@ public class JunctionDetection : MonoBehaviour
                 }
                 emissionToggle = false;
                 emissionToggle2 = false;
+                clickTrigger = false;
         }
         
-      
+        
         if (emissionToggle){
             if((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E)) && !d.canPickupCone() && conesPlaced < coneLimit){
                 d.scoreCone();
@@ -119,6 +135,26 @@ public class JunctionDetection : MonoBehaviour
                 RedConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
                 s.placeRedCone(conversion[junctionType], row, col);
             }
+        }
+        if(clickTrigger && Input.GetMouseButtonDown(0)){
+            d.scoreCone();
+                conesPlaced += 1;
+                GameObject newBlueCone = Instantiate(blueCone, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y + heightConstant, gameObject.transform.position.z), Quaternion.identity);
+                newBlueCone.gameObject.transform.localScale += new Vector3(9,9,9);
+                Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
+                blueConeRb.mass = 625;
+                blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
+                s.placeBlueCone(conversion[junctionType], row, col);
+        }
+        if(clickTrigger && Input.GetMouseButtonDown(1)){
+                d2.scoreCone();
+                conesPlaced += 1;
+                GameObject newRedCone = Instantiate(redCone, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + heightConstant, gameObject.transform.position.z), Quaternion.identity);
+                newRedCone.gameObject.transform.localScale += new Vector3(9, 9, 9);
+                Rigidbody RedConeRb = newRedCone.GetComponent<Rigidbody>();
+                RedConeRb.mass = 625;
+                RedConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+                s.placeRedCone(conversion[junctionType], row, col);
         }
     }
 }
