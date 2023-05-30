@@ -14,16 +14,19 @@ public class JunctionDetection : MonoBehaviour
     bool emissionToggle = false;
     bool emissionToggle2 = false;
     private float distance = 2.5f;
+    private float distanceOffset = 4;
     Detection d;
     Detection d2;
     ScoreBoard s;
+    private float row = 0;
+    private float col = 0;
     private float heightConstant = 3.5f;
     public float coneLimit = 8;
     private string junctionType = "";
     private int conesPlaced = 0;
     private Dictionary<string,float> heights = new Dictionary<string,float>();
     private Dictionary<string, int> conversion = new Dictionary<string, int>();
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,10 @@ public class JunctionDetection : MonoBehaviour
         d = robot.GetComponent<Detection>();
         s = GameObject.Find("Canvas").GetComponent<ScoreBoard>();
         d2 = robot2.GetComponent<Detection>();
+        row = (gameObject.transform.position.z)/distanceOffset;
+        col = (gameObject.transform.position.x)/distanceOffset;
+        
+        
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
         foreach(KeyValuePair<string, float> kvp in heights)
             {
@@ -96,7 +103,7 @@ public class JunctionDetection : MonoBehaviour
                 Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
                 blueConeRb.mass = 625;
                 blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
-                s.placeBlueCone(conversion[junctionType]);
+                s.placeBlueCone(conversion[junctionType], row, col);
             }
         }
         if (emissionToggle2)
@@ -110,7 +117,7 @@ public class JunctionDetection : MonoBehaviour
                 Rigidbody RedConeRb = newRedCone.GetComponent<Rigidbody>();
                 RedConeRb.mass = 625;
                 RedConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-
+                s.placeRedCone(conversion[junctionType], row, col);
             }
         }
     }
