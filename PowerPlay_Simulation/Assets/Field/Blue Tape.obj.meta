@@ -1,14 +1,19 @@
 fileFormatVersion: 2
-guid: a870b00bad920004cad140b10243ad1d
+guid: d4e2a5bd0f0a41645add37accb86ff35
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Corner_Angle_TapeMat
+    second: {fileID: 2100000, guid: 8746ae23cd3ef4f4285e0ec6385598e9, type: 2}
   materials:
     materialImportMode: 2
-    materialName: 2
-    materialSearch: 2
-    materialLocation: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

@@ -7,6 +7,7 @@ public class BarrierGeneration : MonoBehaviour
     public float offset = 4f;
     [SerializeField] Material transparentRed;
     [SerializeField] Material transparentBlue;
+    GameObject barrier;
     
     private Dictionary<int,string> letter = new Dictionary<int,string>();
     // Start is called before the first frame update
@@ -24,11 +25,19 @@ public class BarrierGeneration : MonoBehaviour
             for(int c = 0; c < 5; c++){
                 float x = (offset * c) - (2 * offset);
                 float z = (offset * r) - (2 * offset);
-                GameObject barrier = Instantiate(d.gameObject, new Vector3(x, 0.25f, z), Quaternion.identity);
+                barrier = Instantiate(d.gameObject, new Vector3(x, 0.25f, z), Quaternion.identity);
                 barrier.name = letter[r] + "" + (c+1) + "barrier";
 
             }
         }
+        barrier = Instantiate(d.gameObject, new Vector3(11, 0.25f, -11), Quaternion.identity);
+        barrier.name = "barrierRedBottomRight";
+        barrier = Instantiate(d.gameObject, new Vector3(11, 0.25f, 11), Quaternion.identity);
+        barrier.name = "barrierBlueTopRight";
+        barrier = Instantiate(d.gameObject, new Vector3(-11, 0.25f, 11), Quaternion.identity);
+        barrier.name = "barrierRedTopLeft";
+        barrier = Instantiate(d.gameObject, new Vector3(-11, 0.25f, -11), Quaternion.identity);
+        barrier.name = "barrierRedBottomLeft";
         GameObject blueCone = GameObject.Find("Blue_Cone_Sample").gameObject;
         for(int r = 0; r < 5; r++){
             GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, (5 - r) * .25f, -2), Quaternion.identity);

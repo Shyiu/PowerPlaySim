@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacedConesBehaviour : MonoBehaviour
+public class PlacedConesBehaviour :MonoBehaviour
 {
     private int redConesLeft = 20;
     private int blueConesLeft = 20;
@@ -53,11 +53,11 @@ public class PlacedConesBehaviour : MonoBehaviour
     }
     void Update()
     {
-        if(!redConePlaced && Time.realtimeSinceStartup - redCurrentTime > cooldown){
+        if(!redConePlaced && Time.realtimeSinceStartup - redCurrentTime > cooldown && redConesLeft == 0){
             placeRedCone();
             redConePlaced = true;
         }
-        if(!blueConePlaced && Time.realtimeSinceStartup - blueCurrentTime > cooldown){
+        if(!blueConePlaced && Time.realtimeSinceStartup - blueCurrentTime > cooldown && blueConesLeft == 0){
             placeBlueCone();
             blueConePlaced = true;
         }

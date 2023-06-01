@@ -22,10 +22,10 @@ public class ScoreBoard : MonoBehaviour
     int redControlValue = 0;
     int blueCircuitValue = 0;
     int redCircuitValue = 0;
-    bool terminalTopLeft = true;
-    bool terminalTopRight = true;
-    bool terminalBottomLeft = true;
-    bool terminalBottomRight = true;
+    bool terminalTopLeft = false;
+    bool terminalTopRight = false;
+    bool terminalBottomLeft = false;
+    bool terminalBottomRight = false;
     private int startx = 0;
     private int starty = 19;
     private int step = 22;
@@ -103,20 +103,56 @@ public class ScoreBoard : MonoBehaviour
         
         
     }
+    public void placeBlueCone(int type){
+        blueScoreValue += 1;
+        if(type == 0){
+             GameObject redCircle = Instantiate(GameObject.Find("BlueFilledTriangle"), new Vector3(56, 78, 0), Quaternion.identity);
+             redCircle.transform.SetParent(GameObject.Find("ScoreBoardImage").transform, false);
+             terminalTopLeft = true;
+        }
+        else{
+            GameObject redCircle = Instantiate(GameObject.Find("BlueFilledTriangle"), new Vector3(-56, -38.5f, 0), Quaternion.identity);
+            redCircle.transform.SetParent(GameObject.Find("ScoreBoardImage").transform, false);
+            redCircle.transform.Rotate(0.0f, 0.0f, 180.0f, Space.Self);
+            terminalBottomRight = true;
+        }
+        updateScore();
+        
+        
+    }
     public void placeRedCone(int position, float row, float col){
         redCones[position] += 1;
         redTexts[position].text = redCones[position].ToString();
-        redScoreValue += 2 + position;
+        redScoreValue += 1;
         GameObject redCircle = Instantiate(GameObject.Find("RedFilledCircle"), new Vector3(startx - step*col, starty + step*row, 0), Quaternion.identity);
         redCircle.transform.SetParent(GameObject.Find("ScoreBoardImage").transform, false);
         control[(int) (-row + 2), (int)col + 2] = 2;
         updateScore();
         // redCircle.transform.position = new Vector3(startx + step*col,  starty + step*row, 0);
     }
+    public void placeRedCone(int type){
+        redScoreValue += 1;
+        if(type == 0){
+             GameObject redCircle = Instantiate(GameObject.Find("RedFilledTriangle"), new Vector3(-57, 78, 0), Quaternion.identity);
+             redCircle.transform.SetParent(GameObject.Find("ScoreBoardImage").transform, false);
+             terminalTopRight = true;
+        }
+        else{
+            GameObject redCircle = Instantiate(GameObject.Find("RedFilledTriangle"), new Vector3(57, -38.5f, 0), Quaternion.identity);
+            redCircle.transform.SetParent(GameObject.Find("ScoreBoardImage").transform, false);
+            redCircle.transform.Rotate(0.0f, 0.0f, 180.0f, Space.Self);
+            terminalBottomLeft = true;
+        }
+        updateScore();
+        // redCircle.transform.position = new Vector3(startx + step*col,  starty + step*row, 0);
+    }
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(terminalTopRight);
+        Debug.Log(terminalBottomLeft);
+        Debug.Log(terminalTopLeft);
+        Debug.Log(terminalBottomRight);
     }
 }
  
