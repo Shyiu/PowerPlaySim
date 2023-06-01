@@ -15,6 +15,7 @@ public class Robot1Movement : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         rb.AddRelativeForce(Vector3.forward * -1 * speed, ForceMode.Impulse);
+       
     }
 
     // Update is called once per frame
@@ -31,7 +32,8 @@ public class Robot1Movement : MonoBehaviour
             float v = Input.GetAxisRaw("Vertical");
     
             rb.AddRelativeForce(Vector3.forward * v * speed, ForceMode.Impulse);
-            rb.AddTorque(Vector3.up * h * turnspeed, ForceMode.Impulse);
+            gameObject.transform.Rotate(0.0f, turnspeed * h, 0.0f, Space.Self);
+
         }
     }
 }

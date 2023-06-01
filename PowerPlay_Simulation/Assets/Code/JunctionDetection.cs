@@ -37,9 +37,9 @@ public class JunctionDetection : MonoBehaviour
         heights.Add("Medium", 7);
         heights.Add("High", 10);
         robot = GameObject.Find("Robot1");
-        blueCone = GameObject.Find("Blue_Cone");
+        blueCone = GameObject.Find("Blue_Cone_Sample");
         robot2 = GameObject.Find("Robot2");
-        redCone = GameObject.Find("Red_Cone");
+        redCone = GameObject.Find("Red_Cone_Sample");
         conversion.Add("Ground", 0);
         conversion.Add("Short", 1);
         conversion.Add("Medium", 2);
@@ -50,8 +50,14 @@ public class JunctionDetection : MonoBehaviour
         d2 = robot2.GetComponent<Detection>();
         row = (gameObject.transform.position.z)/distanceOffset;
         col = (gameObject.transform.position.x)/distanceOffset;
-        
-        
+        if (gameObject.name.Contains("Ground"))
+        {
+            ;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * -1f, ForceMode.Impulse);
+        }
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
         foreach(KeyValuePair<string, float> kvp in heights)
             {
@@ -118,6 +124,7 @@ public class JunctionDetection : MonoBehaviour
                 newBlueCone.gameObject.transform.localScale += new Vector3(9,9,9);
                 Rigidbody blueConeRb =  newBlueCone.GetComponent<Rigidbody>();
                 blueConeRb.mass = 625;
+                newBlueCone.gameObject.name = gameObject.name + "Cone" + conesPlaced;
                 blueConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
                 s.placeBlueCone(conversion[junctionType], row, col);
             }
@@ -130,6 +137,7 @@ public class JunctionDetection : MonoBehaviour
                 conesPlaced += 1;
                 GameObject newRedCone = Instantiate(redCone, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + heightConstant, gameObject.transform.position.z), Quaternion.identity);
                 newRedCone.gameObject.transform.localScale += new Vector3(9, 9, 9);
+                newRedCone.gameObject.name = gameObject.name + "Cone" + conesPlaced;
                 Rigidbody RedConeRb = newRedCone.GetComponent<Rigidbody>();
                 RedConeRb.mass = 625;
                 RedConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;

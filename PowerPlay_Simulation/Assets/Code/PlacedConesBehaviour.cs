@@ -26,7 +26,7 @@ public class PlacedConesBehaviour : MonoBehaviour
         coneRb.useGravity = false;
         coneRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
         MeshRenderer blueConeCollider = coneClone.GetComponent<MeshRenderer>();
-        blueConeCollider.material = GameObject.Find("Red_Cone").GetComponent<MeshRenderer>().material;
+        blueConeCollider.material = GameObject.Find("Red_Cone_Sample").GetComponent<MeshRenderer>().material;
         redConesLeft -= 1;
         Destroy(cone);
     }
@@ -38,7 +38,7 @@ public class PlacedConesBehaviour : MonoBehaviour
         coneRb.useGravity = false;
         coneRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
         MeshRenderer blueConeCollider = coneClone.GetComponent<MeshRenderer>();
-        blueConeCollider.material = GameObject.Find("Blue_Cone").GetComponent<MeshRenderer>().material;
+        blueConeCollider.material = GameObject.Find("Blue_Cone_Sample").GetComponent<MeshRenderer>().material;
         blueConesLeft -= 1;
         Destroy(cone);
     }

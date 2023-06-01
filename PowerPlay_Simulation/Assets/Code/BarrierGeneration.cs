@@ -12,6 +12,7 @@ public class BarrierGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 30;
         letter.Add(0,"A");
         letter.Add(1, "B");
         letter.Add(2, "C");
@@ -28,7 +29,7 @@ public class BarrierGeneration : MonoBehaviour
 
             }
         }
-        GameObject blueCone = GameObject.Find("Blue_Cone").gameObject;
+        GameObject blueCone = GameObject.Find("Blue_Cone_Sample").gameObject;
         for(int r = 0; r < 5; r++){
             GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, (5 - r) * .25f, -2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
@@ -66,7 +67,7 @@ public class BarrierGeneration : MonoBehaviour
                 coneCount += 1;
             }
         }
-        GameObject redCone = GameObject.Find("Red_Cone").gameObject;
+        GameObject redCone = GameObject.Find("Red_Cone_Sample").gameObject;
 
         coneCount = 11;
         for(int c = 1; c <= 4; c++){
