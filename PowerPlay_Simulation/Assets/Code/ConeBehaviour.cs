@@ -17,23 +17,20 @@ public class ConeBehaviour : MonoBehaviour
     private bool coneStackCone = false;
     private bool lightOn = false;
     private bool blue = false;
+    private bool sample = false;
     private float coneDistance = 1.5f;
     PlacedConesBehaviour p;
     void Start()
     {
-        if(gameObject.name.Contains("Red")){
-            blue = false;
-        }
-        else{
-            blue = true;
-        }
+        blue = !gameObject.name.Contains("Red");
+        sample = gameObject.name.Contains("Sample");
+        
         robot = GameObject.Find("Robot1");
         robot2 = GameObject.Find("Robot2");
         robotScript = robot.GetComponent<Detection>();
         robotScript2 = robot2.GetComponent<Detection>();
-        if(gameObject.name.Contains("Stack")){
-            coneStackCone = true;
-        }
+        coneStackCone = gameObject.name.Contains("Stack");
+            
         ypos = transform.position.y;
         p = GameObject.Find("Floor").GetComponent<PlacedConesBehaviour>();
     }
@@ -41,10 +38,14 @@ public class ConeBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GetComponent<Rigidbody>().mass < 600){
+        if (sample)
+        {
+            transform.position = new Vector3(0, -169, 0);
+        }
+        if(GetComponent<Rigidbody>().mass < 600 && !sample){
         transform.position = new Vector3(transform.position.x, ypos, transform.position.z);
         }
-        if(transform.position.y < 0){
+        if(transform.position.y < 0 && !sample){
             transform.position = new Vector3(transform.position.x, 0.05f, transform.position.z);
         }
         if(!coneStackCone && GetComponent<Rigidbody>().mass < 600){

@@ -29,9 +29,14 @@ public class Robot2Movement : MonoBehaviour
         if(stopped){
             float h = Input.GetAxisRaw("Horizontal2");   
             float v = Input.GetAxisRaw("Vertical2");
-    
+           // rb.AddForceAtPosition(new Vector3(0, v * speed, 0), new Vector3() )
             rb.AddRelativeForce(Vector3.forward * v * speed, ForceMode.Impulse);
-            rb.AddTorque(Vector3.up * h * turnspeed, ForceMode.Impulse);
+           
+           
+           gameObject.transform.Rotate(0.0f, turnspeed * h, 0.0f, Space.Self);
+
+
+           
         }
     }
 }
