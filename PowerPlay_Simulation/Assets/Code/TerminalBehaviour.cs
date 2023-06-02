@@ -109,6 +109,7 @@ public class TerminalBehaviour : MonoBehaviour
                     newRedCone.gameObject.transform.localScale += new Vector3(9, 9, 9);
                     Rigidbody RedConeRb = newRedCone.GetComponent<Rigidbody>();
                     RedConeRb.mass = 625;
+                    newRedCone.gameObject.name = gameObject.name + "TerminalCone" + count;
                     count+=1;
                     RedConeRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
                     if(x == 11 && z == 11){

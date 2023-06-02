@@ -149,10 +149,7 @@ public class ScoreBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(terminalTopRight);
-        Debug.Log(terminalBottomLeft);
-        Debug.Log(terminalTopLeft);
-        Debug.Log(terminalBottomRight);
+        
     }
 }
  
