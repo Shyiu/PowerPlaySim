@@ -33,7 +33,7 @@ public class JunctionDetection : MonoBehaviour
     void Start()
     {
         heights.Add("Short", 5f);
-        heights.Add("Ground", 2f);
+        heights.Add("Ground", 1f);
         heights.Add("Medium", 7f);
         heights.Add("High", 10f);
         robot = GameObject.Find("Robot1");

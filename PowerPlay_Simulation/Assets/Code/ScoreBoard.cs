@@ -14,7 +14,8 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] GameObject blueScore;
     TextMeshProUGUI blueScoreText;
     TextMeshProUGUI timer;
-    float seconds = 180;
+    int time = 180;
+    float seconds;
     float offset;
     TextMeshProUGUI redScoreText;
     TextMeshProUGUI[] blueTexts;
@@ -37,6 +38,7 @@ public class ScoreBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        seconds = (float)time;
         blueTexts = new TextMeshProUGUI[4];
         redTexts = new TextMeshProUGUI[4];
         timer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
@@ -158,7 +160,7 @@ public class ScoreBoard : MonoBehaviour
     }
     public void timerControl()
     {
-        seconds = 300 - Time.realtimeSinceStartup + offset;
+        seconds = time - Time.realtimeSinceStartup + offset;
         int minutes = (int) seconds / 60;
         float currentSeconds = seconds % 60;
         
