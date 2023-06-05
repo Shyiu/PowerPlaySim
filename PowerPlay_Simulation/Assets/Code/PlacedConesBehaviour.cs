@@ -53,11 +53,11 @@ public class PlacedConesBehaviour :MonoBehaviour
     }
     void Update()
     {
-        if(!redConePlaced && Time.realtimeSinceStartup - redCurrentTime > cooldown && redConesLeft == 0){
+        if(!redConePlaced && Time.realtimeSinceStartup - redCurrentTime > cooldown && redConesLeft != 0){
             placeRedCone();
             redConePlaced = true;
         }
-        if(!blueConePlaced && Time.realtimeSinceStartup - blueCurrentTime > cooldown && blueConesLeft == 0){
+        if(!blueConePlaced && Time.realtimeSinceStartup - blueCurrentTime > cooldown && blueConesLeft != 0){
             placeBlueCone();
             blueConePlaced = true;
         }

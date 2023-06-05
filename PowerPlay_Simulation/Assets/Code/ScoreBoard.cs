@@ -13,6 +13,9 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] GameObject redScore;
     [SerializeField] GameObject blueScore;
     TextMeshProUGUI blueScoreText;
+    TextMeshProUGUI timer;
+    float seconds = 180;
+    float offset;
     TextMeshProUGUI redScoreText;
     TextMeshProUGUI[] blueTexts;
     TextMeshProUGUI[] redTexts;
@@ -36,6 +39,7 @@ public class ScoreBoard : MonoBehaviour
     {
         blueTexts = new TextMeshProUGUI[4];
         redTexts = new TextMeshProUGUI[4];
+        timer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         blueScoreText = blueScore.GetComponent<TextMeshProUGUI>();
         redScoreText = redScore.GetComponent<TextMeshProUGUI>();
 
@@ -45,6 +49,7 @@ public class ScoreBoard : MonoBehaviour
         for(int i = 0; i < redTextBoxes.Length; i++){
             redTexts[i] = redTextBoxes[i].GetComponent<TextMeshProUGUI>();
         }
+        offset = Time.realtimeSinceStartup;
     }
     public void calculateControlValues(){
         blueControlValue = 0;
@@ -149,7 +154,23 @@ public class ScoreBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timerControl();
+    }
+    public void timerControl()
+    {
+        seconds = 300 - Time.realtimeSinceStartup + offset;
+        int minutes = (int) seconds / 60;
+        float currentSeconds = seconds % 60;
         
+        currentSeconds *= 10;
+        currentSeconds = (int)currentSeconds;
+        currentSeconds /= 10.0f;
+        string text = minutes + ":" + currentSeconds;
+        timer.text = text;
+        if(minutes == 0 && currentSeconds <= 30)
+        {
+            timer.color = Color.red;
+        }
     }
 }
  
