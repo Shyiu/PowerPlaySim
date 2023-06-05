@@ -40,7 +40,7 @@ public class BarrierGeneration : MonoBehaviour
         barrier.name = "barrierRedBottomLeft";
         GameObject blueCone = GameObject.Find("Blue_Cone_Sample").gameObject;
         for(int r = 0; r < 5; r++){
-            GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, (5 - r) * .25f, -2), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, (4 - r) * .25f, -2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
              blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
              blueConeClone.name = "Right Blue_Cone Stack " + r;
@@ -97,7 +97,7 @@ public class BarrierGeneration : MonoBehaviour
         }
         for (int r = 0; r < 5; r++)
         {
-            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.4f, (5 - r) * .25f, 2), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.4f, (4 - r) * .25f, 2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
             blueConeClone.gameObject.transform.localScale += new Vector3(9, 9, 9);
             blueConeClone.name = "Right Red_Cone Stack " + r;

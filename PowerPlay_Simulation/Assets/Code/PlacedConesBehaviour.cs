@@ -36,7 +36,7 @@ public class PlacedConesBehaviour :MonoBehaviour
         GameObject coneClone = Instantiate(cone, new Vector3(0, 0.05f, -11.25f), Quaternion.identity);
         Rigidbody coneRb =  coneClone.GetComponent<Rigidbody>();
         coneRb.useGravity = false;
-        coneRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
+        coneRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         MeshRenderer blueConeCollider = coneClone.GetComponent<MeshRenderer>();
         blueConeCollider.material = GameObject.Find("Blue_Cone_Sample").GetComponent<MeshRenderer>().material;
         blueConesLeft -= 1;

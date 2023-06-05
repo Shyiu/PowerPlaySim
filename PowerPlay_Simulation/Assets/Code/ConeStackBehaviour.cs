@@ -99,6 +99,12 @@ public class ConeStackBehaviour : MonoBehaviour
         if (!sort) {
             cones.Sort(CompareYValues);
             sort = true;
+            Debug.Log(cones[0].gameObject.transform.position.y);
+            Debug.Log(cones[1].gameObject.transform.position.y);
+            Debug.Log(cones[2].gameObject.transform.position.y);
+            Debug.Log(cones[3].gameObject.transform.position.y);
+            Debug.Log(cones[4].gameObject.transform.position.y);
+
         }
         if (conesLeft != 0)
         {

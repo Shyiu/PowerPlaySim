@@ -51,7 +51,7 @@ public class ConeBehaviour : MonoBehaviour
         if(!coneStackCone && GetComponent<Rigidbody>().mass < 600){
             ray = new Ray(robot.transform.position, robot.transform.forward);
             ray2 = new Ray(robot2.transform.position, robot2.transform.forward);
-            if(Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name)){
+            if(Physics.Raycast(ray, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name) && robotScript.canPickupCone()){
                 MeshRenderer meshRendererObj = gameObject.GetComponent<MeshRenderer>();
                 for (int i = 0; i < meshRendererObj.materials.Length;i++)
                 {
@@ -60,7 +60,8 @@ public class ConeBehaviour : MonoBehaviour
                 }   
                 lightOn = true;
             }
-            else if(Physics.Raycast(ray2, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name)){
+            else if(Physics.Raycast(ray2, out hit, coneDistance) && hit.collider.name.Equals(gameObject.name) && robotScript2.canPickupCone())
+            {
                 MeshRenderer meshRendererObj = gameObject.GetComponent<MeshRenderer>();
                 for (int i = 0; i < meshRendererObj.materials.Length;i++)
                 {

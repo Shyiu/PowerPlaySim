@@ -31,7 +31,7 @@ public class DebugMode : MonoBehaviour
                         junctionScripts.Add(GameObject.Find(type + letter + number).GetComponent<JunctionDetection>());
                     }
                     catch(Exception e){
-                        Debug.Log(e);
+                        //Debug.Log(e);
                     }
                 }
             }
