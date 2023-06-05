@@ -16,42 +16,17 @@ public class ConeStackBehaviour : MonoBehaviour
     private bool blue = false;
     private Detection robotScript;
     private Detection robotScript2;
+    private bool retrieved = false;
     void Start()
     {
         robotScript = robot.GetComponent<Detection>();
         robotScript2 = robot2.GetComponent<Detection>();
+       
+
     }
-  
+
     // Update is called once per frame
-     
-    void OnTriggerEnter(Collider c){
-        if(c.gameObject.name.Contains("Blue_Cone")){
-            blue = true;
-            // for(int x = 0; x < cones.Count; x++){
-            //     if(cones[x].gameObject.transform.position.y >= c.gameObject.transform.position.y){
-            //         cones.Insert(x, c);
-            //         complete = true;
-            //     }
-            // }
-            cones.Insert(0, c);
-            // if(!complete){
-            //     cones.Add(c);
-            // }
-            
-            
-        }
-        else if (c.gameObject.name.Contains("Red_Cone"))
-        {
-            blue = false;
-            // for(int x = 0; x < cones.Count; x++){
-            //     if(cones[x].gameObject.transform.position.y >= c.gameObject.transform.position.y){
-            //         cones.Insert(x, c);
-            //         complete = true;
-            //     }
-            // }
-            cones.Insert(0, c);
-        }
-    }
+
     private void lightUpCone(){
         if(cones[conesLeft - 1] == null){
             return;
@@ -96,14 +71,17 @@ public class ConeStackBehaviour : MonoBehaviour
     }
     void Update()
     {
-        if (!sort) {
-            cones.Sort(CompareYValues);
-            sort = true;
-            Debug.Log(cones[0].gameObject.transform.position.y);
-            Debug.Log(cones[1].gameObject.transform.position.y);
-            Debug.Log(cones[2].gameObject.transform.position.y);
-            Debug.Log(cones[3].gameObject.transform.position.y);
-            Debug.Log(cones[4].gameObject.transform.position.y);
+        if (GameObject.Find("Floor").GetComponent<BarrierGeneration>().ready() && !retrieved)
+        {
+            cones = GameObject.Find("Floor").GetComponent<BarrierGeneration>().getCones(gameObject.name);
+            if (gameObject.name.Contains("Red"))
+            {
+                blue = false;
+            }
+            else
+            {
+                blue = true;
+            }
 
         }
         if (conesLeft != 0)

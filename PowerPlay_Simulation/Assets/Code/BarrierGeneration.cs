@@ -7,12 +7,41 @@ public class BarrierGeneration : MonoBehaviour
     public float offset = 4f;
     [SerializeField] Material transparentRed;
     [SerializeField] Material transparentBlue;
+    private List<Collider> BlueRight;
+    private List<Collider> BlueLeft;
+    private List<Collider> RedRight;
+    private List<Collider> RedLeft;
+    private bool completed = false;
     GameObject barrier;
     
     private Dictionary<int,string> letter = new Dictionary<int,string>();
     // Start is called before the first frame update
+    public List<Collider> getCones(string name)
+    {
+        if (name.Contains("Red"))
+        {
+            if (name.Contains("Right"))
+            {
+                return RedRight;
+            }
+            return RedLeft;
+        }
+        else
+        {
+            if (name.Contains("Right"))
+            {
+                return BlueRight;
+            }
+            return BlueLeft;
+        }
+
+    }
     void Start()
     {
+        BlueRight = new List<Collider>();
+        BlueLeft = new List<Collider>();
+        RedRight = new List<Collider>();
+        RedLeft = new List<Collider>();
         Application.targetFrameRate = 30;
         letter.Add(0,"A");
         letter.Add(1, "B");
@@ -40,7 +69,7 @@ public class BarrierGeneration : MonoBehaviour
         barrier.name = "barrierRedBottomLeft";
         GameObject blueCone = GameObject.Find("Blue_Cone_Sample").gameObject;
         for(int r = 0; r < 5; r++){
-            GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, (4 - r) * .25f, -2), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(blueCone, new Vector3(11.4f, r * .25f, -2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
              blueConeClone.gameObject.transform.localScale += new Vector3(9,9,9);
              blueConeClone.name = "Right Blue_Cone Stack " + r;
@@ -48,6 +77,7 @@ public class BarrierGeneration : MonoBehaviour
              blueConeRb.useGravity = false;
              blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
+             BlueRight.Add(blueConeCollider);
         }
         for(int r = 0; r < 5; r++){
             GameObject blueConeClone = Instantiate(blueCone, new Vector3(-11.4f, r * .25f, -2), Quaternion.identity);
@@ -57,6 +87,7 @@ public class BarrierGeneration : MonoBehaviour
              blueConeRb.useGravity = false;
              blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationY;
              Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
+             BlueLeft.Add(blueConeCollider);
 
         }
         int coneCount = 11;
@@ -97,7 +128,7 @@ public class BarrierGeneration : MonoBehaviour
         }
         for (int r = 0; r < 5; r++)
         {
-            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.4f, (4 - r) * .25f, 2), Quaternion.identity);
+            GameObject blueConeClone = Instantiate(redCone, new Vector3(11.4f, r * .25f, 2), Quaternion.identity);
             // Debug.Log(blueConeClone.transform.position.y);
             blueConeClone.gameObject.transform.localScale += new Vector3(9, 9, 9);
             blueConeClone.name = "Right Red_Cone Stack " + r;
@@ -105,6 +136,7 @@ public class BarrierGeneration : MonoBehaviour
             blueConeRb.useGravity = false;
             blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
+            RedRight.Add(blueConeCollider);
         }
         for (int r = 0; r < 5; r++)
         {
@@ -115,11 +147,16 @@ public class BarrierGeneration : MonoBehaviour
             blueConeRb.useGravity = false;
             blueConeRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             Collider blueConeCollider = blueConeClone.GetComponent<Collider>();
+            RedLeft.Add( blueConeCollider);
 
         }
+        completed = true;
 
     }
-   
+    public bool ready()
+    {
+        return completed;
+    }
     // Update is called once per frame
     void Update()
     {
