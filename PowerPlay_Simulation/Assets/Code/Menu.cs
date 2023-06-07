@@ -9,7 +9,6 @@ public class Menu : MonoBehaviour
 {
 
     public GameObject loadingScreen;
-    public Slider slider;
     public TMP_Text progressText;
 
     public void playGame(int sceneIndex)
@@ -22,15 +21,14 @@ public class Menu : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
-        
+        string text = "Loading . . . ";
 
         while (!operation.isDone)
         {
-            //float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            float progress = operation.progress;
-            progressText.text = progress * 100f + "%";
+           
+            progressText.text = text;
             Debug.Log(operation.progress);
-            slider.value = progress;
+      
 
             yield return null;
 
