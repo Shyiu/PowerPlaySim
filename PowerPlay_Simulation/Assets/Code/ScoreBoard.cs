@@ -130,7 +130,7 @@ public class ScoreBoard : MonoBehaviour
     public void placeRedCone(int position, float row, float col){
         redCones[position] += 1;
         redTexts[position].text = redCones[position].ToString();
-        redScoreValue += 1;
+        redScoreValue += 2 + position;
         GameObject redCircle = Instantiate(GameObject.Find("RedFilledCircle"), new Vector3(startx - step*col, starty + step*row, 0), Quaternion.identity);
         redCircle.transform.SetParent(GameObject.Find("ScoreBoardImage").transform, false);
         control[(int) (-row + 2), (int)col + 2] = 2;

@@ -88,7 +88,7 @@ public class TerminalBehaviour : MonoBehaviour
         }
         else{
             Ray ray = new Ray(robot2.transform.position, robot2.transform.forward);
-            if(Physics.Raycast(ray, out hit, 2.5f) && hit.collider.name.Equals(c.gameObject.name) && !d.canPickupCone()){
+            if(Physics.Raycast(ray, out hit, 2.5f) && hit.collider.name.Equals(c.gameObject.name) && !d2.canPickupCone()){
                 for (int i = 0; i < GetComponent<MeshRenderer>().materials.Length; i++)
                 {
                     GetComponent<MeshRenderer>().materials[i].EnableKeyword("_EMISSION");

@@ -8,6 +8,7 @@ public class Robot2Movement : MonoBehaviour
     public float turnspeed = 10;
     private Rigidbody rb;
     private bool stopped = false;
+    private float delay = .5f;
     // Start is called before the first frame update
    
     void Start()
@@ -22,7 +23,7 @@ public class Robot2Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.y == 0)
+        if (rb.velocity.y == 0 && Time.realtimeSinceStartup > delay)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             
