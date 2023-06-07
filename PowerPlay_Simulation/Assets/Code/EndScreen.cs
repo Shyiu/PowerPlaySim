@@ -17,10 +17,10 @@ public class EndScreen : MonoBehaviour
     {
         if (redTotalScore > blueTotalScore)
         {
-            text.text = "The Red Player Won!";
+            text.text = "The Red Player Won with a score of " + redTotalScore + "!"; 
         } else if (blueTotalScore > redTotalScore)
         {
-            text.text = "The Blue Player Won!";
+            text.text = "The Blue Player Won with a score of " + blueTotalScore + "!";
         } else
         {
             text.text = "It was a draw!";

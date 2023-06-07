@@ -1063,20 +1063,21 @@ MonoBehaviour:
 
 
     Each
-    player can only pick up one cone at a time
+    player can only pick up one cone at a time and when a robot controls a cone it
+    is highlighted.
 
 
-    You may pick up a cone when
-    it is highlighted and you may deliver to a junction when the junction is highlighted
+    You may pick up a cone when it is highlighted and you may
+    deliver to a junction when the junction is highlighted
 
 
-    The
-    goal of each player is to pickup a cone of their respective color and deliver
-    it to a YELLOW junction or to their respective colored corner on the field.
+    The goal of each
+    player is to pickup a cone of their respective color and deliver it to a YELLOW
+    junction or to their respective colored corner on the field.
 
 
-    Winner
-    of the game is the person with the most points at the end of 3 minutes'
+    Winner of
+    the game is the person with the most points at the end of 3 minutes'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
