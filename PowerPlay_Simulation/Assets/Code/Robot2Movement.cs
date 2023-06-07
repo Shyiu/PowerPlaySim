@@ -14,6 +14,9 @@ public class Robot2Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.AddRelativeForce(Vector3.forward * -1 * speed, ForceMode.Impulse);
+        rb.AddRelativeForce(Vector3.up * 5, ForceMode.Impulse);
+        rb.constraints =  RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
     }
 
     // Update is called once per frame
