@@ -20,9 +20,12 @@ public class Detection : MonoBehaviour
     }
     public void scoreCone(){
         conePickedUp = false;
+        gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+
     }
     public void pickUpCone(){
         conePickedUp = true;
+        gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
     }
     void Update()
 {
