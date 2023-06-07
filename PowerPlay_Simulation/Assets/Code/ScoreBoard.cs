@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ScoreBoard : MonoBehaviour
@@ -26,6 +27,8 @@ public class ScoreBoard : MonoBehaviour
     int redControlValue = 0;
     int blueCircuitValue = 0;
     int redCircuitValue = 0;
+    int redTotalValue = 0;
+    int blueTotalValue = 0;
     bool terminalTopLeft = false;
     bool terminalTopRight = false;
     bool terminalBottomLeft = false;
@@ -53,6 +56,13 @@ public class ScoreBoard : MonoBehaviour
         }
         offset = Time.realtimeSinceStartup;
     }
+
+    void OnDisable()
+    {
+        PlayerPrefs.SetInt("redScore", redTotalValue);
+        PlayerPrefs.SetInt("blueScore", blueTotalValue);
+    }
+
     public void calculateControlValues(){
         blueControlValue = 0;
         redControlValue = 0;
@@ -70,6 +80,8 @@ public class ScoreBoard : MonoBehaviour
     public void updateScore(){
         calculateControlValues();
         calculateCircuitBonus();
+        blueTotalValue = blueScoreValue + blueControlValue + blueCircuitValue;
+        redTotalValue = redScoreValue + redControlValue + redCircuitValue;
         blueScoreText.text = (blueScoreValue +blueControlValue + blueCircuitValue).ToString();
         redScoreText.text = (redScoreValue + redControlValue + redCircuitValue).ToString();
     }
@@ -172,6 +184,10 @@ public class ScoreBoard : MonoBehaviour
         if(minutes == 0 && currentSeconds <= 30)
         {
             timer.color = Color.red;
+        }
+        if (minutes <= 0 && currentSeconds <= 0)
+        {
+            SceneManager.LoadScene(2);
         }
     }
 }
