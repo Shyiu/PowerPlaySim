@@ -34,4 +34,9 @@ public class Menu : MonoBehaviour
 
         }
     }
+    public void buttonClick()
+    {
+        AudioSource a = GameObject.Find("ButtonClick").GetComponent<AudioSource>();
+        a.Play(0);
+    }
 }

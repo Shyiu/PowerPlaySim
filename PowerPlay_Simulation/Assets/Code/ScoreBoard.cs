@@ -14,6 +14,7 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] GameObject redScore;
     [SerializeField] GameObject blueScore;
     TextMeshProUGUI blueScoreText;
+    AudioSource audio;
     TextMeshProUGUI timer;
     int time = 180;
     float seconds;
@@ -33,6 +34,7 @@ public class ScoreBoard : MonoBehaviour
     bool terminalTopRight = false;
     bool terminalBottomLeft = false;
     bool terminalBottomRight = false;
+    bool audioOn = false;
     private int startx = 0;
     private int starty = 19;
     private int step = 22;
@@ -41,6 +43,9 @@ public class ScoreBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audio = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        audio.Play(0);
+        audio.Pause();
         seconds = (float)time;
         blueTexts = new TextMeshProUGUI[4];
         redTexts = new TextMeshProUGUI[4];
@@ -176,17 +181,35 @@ public class ScoreBoard : MonoBehaviour
         int minutes = (int) seconds / 60;
         float currentSeconds = seconds % 60;
         
-        currentSeconds *= 10;
-        currentSeconds = (int)currentSeconds;
-        currentSeconds /= 10.0f;
-        string text = minutes + ":" + currentSeconds;
+        
+        string text;
+        if(currentSeconds < 10)
+        {
+            currentSeconds = (int)currentSeconds;
+            text = minutes + ":0" + currentSeconds;
+        }
+        else
+        {
+            currentSeconds *= 10;
+            currentSeconds = (int)currentSeconds;
+            currentSeconds /= 10.0f;
+            text = minutes + ":" + currentSeconds;
+        }
         timer.text = text;
         if(minutes == 0 && currentSeconds <= 30)
         {
             timer.color = Color.red;
+            if (!audioOn)
+            {
+                audio.UnPause();
+                audioOn = true;
+
+            }
+
         }
         if (minutes <= 0 && currentSeconds <= 0)
         {
+            audio.Pause();
             SceneManager.LoadScene(2);
         }
     }

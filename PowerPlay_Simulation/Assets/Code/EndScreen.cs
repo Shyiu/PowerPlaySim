@@ -37,4 +37,9 @@ public class EndScreen : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    public void buttonClick()
+    {
+        AudioSource a = GameObject.Find("ButtonClick").GetComponent<AudioSource>();
+        a.Play(0);
+    }
 }
