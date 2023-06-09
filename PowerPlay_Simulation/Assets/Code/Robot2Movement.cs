@@ -8,7 +8,7 @@ public class Robot2Movement : MonoBehaviour
     public float turnspeed = 10;
     private Rigidbody rb;
     private bool stopped = false;
-    private float delay = .75f;
+    private float delay = 1f;
     // Start is called before the first frame update
    
     void Start()

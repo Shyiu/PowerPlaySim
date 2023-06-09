@@ -8,8 +8,10 @@ public class Robot1Movement : MonoBehaviour
     public float turnspeed = 10;
     private Rigidbody rb;
     private bool stopped = false;
+    private float delay = 1f;
+
     // Start is called before the first frame update
-   
+
     void Start()
     {
 
@@ -24,13 +26,15 @@ public class Robot1Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.y == 0)
+        if (rb.velocity.y == 0 && Time.realtimeSinceStartup > delay)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
             stopped = true;
         }
-     
-        if(stopped){
+
+
+        if (stopped){
             float h = Input.GetAxisRaw("Horizontal");   
             float v = Input.GetAxisRaw("Vertical");
     
